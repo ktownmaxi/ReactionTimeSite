@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
+import exportToExcel from '../helper/helpers';
 
 function ReactionTest(props){
     let targetRuns = props.targetRuns;
     const currentRunNumber = useRef(0);
+    const reactionSpeedTracker = useRef([]);
 
     const [testActive, setTestActive] = useState(false);
     const [reactionTimePhase, setReactionTimePhase] = useState(0);
@@ -11,7 +13,8 @@ function ReactionTest(props){
     useEffect(() => {
         if (testActive) {
             setReactionTimePhase(1);
-            setTimeout(initiateReactionTest, 2 * 1000);
+            const randomDelay = Math.random() * 5 + 1; 
+            setTimeout(initiateReactionTest, randomDelay * 1000);
         }
     }, [testActive])
 
@@ -43,12 +46,15 @@ function ReactionTest(props){
         function handleKeystroke(event){
             if (event.key === ' '){
                 const reactionTime = Date.now() - colorChangeTimestamp;
+                reactionSpeedTracker.current.push(reactionTime);
                 setInstructionText(`Deine Reaktionszeit war ${reactionTime} ms. <br> Der Test wird in Kürze von selbst neu starten`);
                 setReactionTimePhase(0);
                 setTestActive(false);
                 currentRunNumber.current += 1;
-                if (currentRunNumber.current < targetRuns - 1) {
+                if (currentRunNumber.current <= targetRuns - 1) {
                     setTimeout(startTest, 2000);
+                } else {
+                    exportToExcel(reactionSpeedTracker.current);
                 }
                 document.removeEventListener('keydown', handleKeystroke);
             }
