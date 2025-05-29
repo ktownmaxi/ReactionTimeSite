@@ -4,8 +4,14 @@ import { saveAs } from 'file-saver';
 const exportToExcel = (exportArray) => {
   const wb = XLSX.utils.book_new();
 
-  // Writes Versuch und Zeit as column headers
-  const dataForSheet = exportArray.map((time, index) => ({ Versuch: index + 1, Zeit: time }));
+  const dataForSheet = exportArray.map((entry, index) => {
+    const key = Object.keys(entry)[0];
+    return {
+      Versuch: Math.ceil((index + 1) / 2),
+      Spieler: key,
+      Zeit: entry[key]
+    };
+  });
 
   const ws = XLSX.utils.json_to_sheet(dataForSheet);
 

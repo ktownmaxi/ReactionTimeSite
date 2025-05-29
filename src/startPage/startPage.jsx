@@ -17,7 +17,7 @@ function StartPage() {
     } else if (selectedMode === 0) {
       navigate(`/soloReactionTest/${numberOfRuns}`)
     } else if (selectedMode === 1) {
-      navigate(`/1v1ReactionTest/${numberOfRuns}`)
+      navigate(`/competitiveReactionTest/${numberOfRuns}`)
     }
   }
 
