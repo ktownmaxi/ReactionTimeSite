@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
-function ReactionTest({ targetRuns, playerNumber, addData }){
+function ReactionTest({ targetRuns, playerNumber, addData, playerName1, playerName2 }) {
     const currentRunNumber = useRef(0);
     const reactionSpeedTracker = useRef([]);
     const reactionsCount = useRef(0);
@@ -69,12 +69,12 @@ function ReactionTest({ targetRuns, playerNumber, addData }){
             else if (playerNumber === 2){
                 if (event.key === 'ü'){
                     reactionTimePlayerSpace = Date.now() - colorChangeTimestamp;
-                    addReactionTime('Player1', reactionTimePlayerSpace);
+                    addReactionTime(playerName1, reactionTimePlayerSpace);
                     reactionsCount.current += 1;
 
                 } if (event.key === 'q'){
                     reactionTimePlayerQ = Date.now() - colorChangeTimestamp;
-                    addReactionTime('Player2', reactionTimePlayerQ);
+                    addReactionTime(playerName2, reactionTimePlayerQ);
                     reactionsCount.current += 1;
                 }
                 if (reactionsCount.current >= 2){

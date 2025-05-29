@@ -8,19 +8,29 @@ function StartPage() {
   const [selectedMode, setSelectedMode] = useState(null);
   const [numberOfRuns, setNumberOfRuns] = useState(3);
 
+  const [playerName1, setPlayerName1] = useState('');
+  const [playerName2, setPlayerName2] = useState('');
+
   const options = ["Solo Reaktionstest", "1v1 Reaktionstest"];
 
   const startReactionTest = () => {
     if (selectedMode === null) {
       alert("Bitte wähle einen Modus aus.");
       return;
-    } else if (selectedMode === 0) {
-      navigate(`/soloReactionTest/${numberOfRuns}`)
-    } else if (selectedMode === 1) {
-      navigate(`/competitiveReactionTest/${numberOfRuns}`)
     }
-  }
 
+    if (selectedMode === 0) {
+      navigate(`/soloReactionTest/${numberOfRuns}`);
+    } else if (selectedMode === 1) {
+      if (!playerName1.trim() || !playerName2.trim()) {
+        alert("Bitte gib die Namen beider Spieler ein.");
+        return;
+      }
+      navigate(
+        `/competitiveReactionTest/${numberOfRuns}?player1=${encodeURIComponent(playerName1)}&player2=${encodeURIComponent(playerName2)}`
+      );
+    }
+  };
   const baseButtonStyle = {
     width: '200px',
     height: '50px',
@@ -42,8 +52,10 @@ function StartPage() {
   };
 
   const inputFieldStyle = {
+    color: 'white',
+    textAlign: 'center',
     width: '200px',
-    height: '15px',
+    height: '18px',
     fontSize: '16px',
     margin: '10px',
     text: 'center',
@@ -69,6 +81,10 @@ function StartPage() {
               {option}
             </button>
           ))}
+        </div>
+        <div className="name-creator" style={{ display: selectedMode!==1 ? 'none' : 'block' }} >
+          <input type="text" style={inputFieldStyle} value={playerName1}  onChange={(e) => setPlayerName1(e.target.value)} placeholder="Name des Ersten Spielers"/>
+          <input type="text" style={inputFieldStyle} value={playerName2} onChange={(e) => setPlayerName2(e.target.value)} placeholder="Name des Zweiten Spielers"/>
         </div>
       </div>
 

@@ -1,13 +1,18 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import ReactionTest from '../reactionTestComponent/reactionTest';
 import Leaderboard from './leaderboard';
 import exportToExcel from '../helper/helpers';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 function CompetitiveReactionTest() {
     const navigate = useNavigate();
 
     let targetRuns = useParams().numberOfRuns;
+    const location = useLocation();
+
+    const queryParams = new URLSearchParams(location.search);
+    const playerName1 = queryParams.get('player1');
+    const playerName2 = queryParams.get('player2');
 
     const buttonStyle = {
         width: '200px',
@@ -28,8 +33,8 @@ function CompetitiveReactionTest() {
     <div>
         <h1>1 vs. 1 - Reaktionstest</h1>
 
-        <Leaderboard leaderboardData={data}/>
-        <ReactionTest targetRuns={targetRuns} playerNumber={2} addData={addData} />
+        <Leaderboard leaderboardData={data} />
+        <ReactionTest targetRuns={targetRuns} playerNumber={2} addData={addData} playerName1={playerName1} playerName2={playerName2}/>
 
         <div className='reaction-test-buttons'>
             <button style={buttonStyle} onClick={() => navigate('/')}>Zurück zur Startseite</button>
