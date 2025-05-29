@@ -17,7 +17,7 @@ function ReactionTest({ targetRuns, playerNumber, addData }){
     useEffect(() => {
         if (testActive) {
             setReactionTimePhase(1);
-            const randomDelay = Math.random() * 5 + 1; 
+            const randomDelay = Math.random() * 6 + 2; // Random delay between 2 and 8 seconds
             setTimeout(initiateReactionTest, randomDelay * 1000);
         }
     }, [testActive])
@@ -28,13 +28,13 @@ function ReactionTest({ targetRuns, playerNumber, addData }){
     
     function startTest() {
         if (currentRunNumber.current > 0){
-            setInstructionText(`Drücke Leertaste oder Q , wenn die Box grün wird`);
+            playerNumber === 1 ? setInstructionText(`Drücke Q , wenn die Box grün wird`) : setInstructionText(`Drücke Ü oder Q , wenn die Box grün wird`) ;
             setTestActive(true);
 
         } else {
             function handleKeystroke(event) { 
                 if (event.key === 'Enter') {
-                    setInstructionText(`Drücke Leertaste oder Q, wenn die Box grün wird`);
+                    playerNumber === 1 ? setInstructionText(`Drücke Q , wenn die Box grün wird`) : setInstructionText(`Drücke Ü oder Q , wenn die Box grün wird`) ;
                     setTestActive(true);
                     document.removeEventListener('keydown', handleKeystroke);
                 }
@@ -51,7 +51,7 @@ function ReactionTest({ targetRuns, playerNumber, addData }){
 
         function handleKeystroke(event){
             if (playerNumber === 1){
-                if (event.key === ' '){
+                if (event.key === 'q'){
                     const reactionTime = Date.now() - colorChangeTimestamp;
                     addReactionTime('Player1', reactionTime);
                     setInstructionText(`Deine Reaktionszeit war ${reactionTime} ms. <br> Der Test wird in Kürze von selbst neu starten`);
@@ -67,7 +67,7 @@ function ReactionTest({ targetRuns, playerNumber, addData }){
                 }
             }
             else if (playerNumber === 2){
-                if (event.key === ' '){
+                if (event.key === 'ü'){
                     reactionTimePlayerSpace = Date.now() - colorChangeTimestamp;
                     addReactionTime('Player1', reactionTimePlayerSpace);
                     reactionsCount.current += 1;

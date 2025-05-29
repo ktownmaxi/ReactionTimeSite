@@ -55,7 +55,7 @@ function StartPage() {
 
   return (
     <div>
-      <h1>Reaktionstests</h1>
+      <h1>Reaktionstests - Start Menü</h1>
 
       <div className="mode-selection">
         <h2>Wähle einen Modus:</h2>
