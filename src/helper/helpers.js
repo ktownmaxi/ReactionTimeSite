@@ -4,14 +4,20 @@ import { saveAs } from 'file-saver';
 const exportToExcel = (exportArray) => {
   const wb = XLSX.utils.book_new();
 
-  const dataForSheet = exportArray.map((entry, index) => {
-    const key = Object.keys(entry)[0];
-    return {
-      Versuch: Math.ceil((index + 1) / 2),
-      Spieler: key,
-      Zeit: entry[key]
-    };
-  });
+  const dataForSheet = [];
+
+for (let i = 0; i < exportArray.length; i += 2) {
+  const entry1 = exportArray[i];
+  const entry2 = exportArray[i + 1];
+
+  const row = {
+    Versuch: i / 2 + 1,
+    ...entry1,
+    ...entry2
+  };
+
+  dataForSheet.push(row);
+}
 
   const ws = XLSX.utils.json_to_sheet(dataForSheet);
 

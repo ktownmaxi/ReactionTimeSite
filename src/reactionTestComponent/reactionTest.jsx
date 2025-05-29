@@ -1,10 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import exportToExcel from '../helper/helpers';
 
-function ReactionTest(props){
-    let targetRuns = props.targetRuns;
-    let playerNumber = props.playerNumber;
-
+function ReactionTest({ targetRuns, playerNumber, addData }){
     const currentRunNumber = useRef(0);
     const reactionSpeedTracker = useRef([]);
     const reactionsCount = useRef(0);
@@ -12,6 +8,11 @@ function ReactionTest(props){
     const [testActive, setTestActive] = useState(false);
     const [reactionTimePhase, setReactionTimePhase] = useState(0);
     const [instructionText, setInstructionText] = useState("ENTER drücken um den Test zu starten");
+
+    const addReactionTime = (playerName, reactionTime) => {
+        reactionSpeedTracker.current.push({[playerName]: reactionTime});
+        addData(playerName, reactionTime);
+    }
 
     useEffect(() => {
         if (testActive) {
@@ -27,13 +28,13 @@ function ReactionTest(props){
     
     function startTest() {
         if (currentRunNumber.current > 0){
-            setInstructionText(`Drücke Leertaste, wenn die Box grün wird`);
+            setInstructionText(`Drücke Leertaste oder Q, wenn die Box grün wird`);
             setTestActive(true);
 
         } else {
             function handleKeystroke(event) { 
                 if (event.key === 'Enter') {
-                    setInstructionText(`Drücke Leertaste, wenn die Box grün wird`);
+                    setInstructionText(`Drücke Leertaste oder Q, wenn die Box grün wird`);
                     setTestActive(true);
                     document.removeEventListener('keydown', handleKeystroke);
                 }
@@ -44,13 +45,15 @@ function ReactionTest(props){
 
     function initiateReactionTest() {
         const colorChangeTimestamp = Date.now()
+        let reactionTimePlayerQ = 0;
+        let reactionTimePlayerSpace = 0;
         setReactionTimePhase(2);
 
         function handleKeystroke(event){
             if (playerNumber === 1){
                 if (event.key === ' '){
                     const reactionTime = Date.now() - colorChangeTimestamp;
-                    reactionSpeedTracker.current.push({player1: reactionTime});
+                    addReactionTime('Player1', reactionTime);
                     setInstructionText(`Deine Reaktionszeit war ${reactionTime} ms. <br> Der Test wird in Kürze von selbst neu starten`);
                     setReactionTimePhase(0);
                     setTestActive(false);
@@ -58,32 +61,33 @@ function ReactionTest(props){
                     if (currentRunNumber.current <= targetRuns - 1) {
                         setTimeout(startTest, 2000);
                     } else {
-                        exportToExcel(reactionSpeedTracker.current);
+                        setInstructionText(`Der Test ist abgeschlossen`);
                     }
                     document.removeEventListener('keydown', handleKeystroke);
                 }
             }
             else if (playerNumber === 2){
-                let reactionTime = 0;
                 if (event.key === ' '){
-                    reactionTime = Date.now() - colorChangeTimestamp;
-                    reactionSpeedTracker.current.push({player1: reactionTime});
+                    reactionTimePlayerSpace = Date.now() - colorChangeTimestamp;
+                    addReactionTime('Player1', reactionTimePlayerSpace);
                     reactionsCount.current += 1;
 
                 } if (event.key === 'q'){
-                    reactionTime = Date.now() - colorChangeTimestamp;
-                    reactionSpeedTracker.current.push({player2: reactionTime});
+                    reactionTimePlayerQ = Date.now() - colorChangeTimestamp;
+                    addReactionTime('Player2', reactionTimePlayerQ);
                     reactionsCount.current += 1;
                 }
                 if (reactionsCount.current >= 2){
-                    setInstructionText(`Deine Reaktionszeit war ${reactionTime} ms. <br> Der Test wird in Kürze von selbst neu starten`);
+                    setInstructionText(`Die Reaktionzeit des Q-Spielers war ${reactionTimePlayerQ} ms.
+                        <br> Die Reaktionszeit des Space-Spielers war ${reactionTimePlayerSpace} ms.
+                        <br> Der Test wird in Kürze von selbst neu starten`);
                     setReactionTimePhase(0);
                     setTestActive(false);
                     currentRunNumber.current += 1;
                     if (currentRunNumber.current <= targetRuns - 1) {
                         setTimeout(startTest, 2000);
                     } else {
-                        exportToExcel(reactionSpeedTracker.current);
+                        setInstructionText(`Der Test ist abgeschlossen`);
                     }
                     reactionsCount.current = 0;
                     document.removeEventListener('keydown', handleKeystroke);
