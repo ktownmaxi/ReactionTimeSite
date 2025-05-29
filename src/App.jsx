@@ -13,6 +13,12 @@ function App() {
           <Route path="/soloReactionTest/:numberOfRuns" element={<SoloReactionTest/>}/>
           <Route path="/competitiveReactionTest/:numberOfRuns" element={<CompetitiveReactionTest/>}/>
         </Routes>
+
+        <footer id="footer">
+          <a href="https://github.com/ktownmaxi/ReactionTimeSite" target="_blank" rel="noopener noreferrer">
+            Quellcode auf GitHub ansehen
+          </a>
+        </footer>
       </div>
 
   )
