@@ -28,7 +28,7 @@ function ReactionTest({ targetRuns, playerNumber, addData }){
     
     function startTest() {
         if (currentRunNumber.current > 0){
-            setInstructionText(`Drücke Leertaste oder Q, wenn die Box grün wird`);
+            setInstructionText(`Drücke Leertaste oder Q , wenn die Box grün wird`);
             setTestActive(true);
 
         } else {

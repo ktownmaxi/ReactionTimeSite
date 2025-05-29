@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import ReactionTest from '../reactionTestComponent/reactionTest';
+import Leaderboard from './leaderboard';
 import exportToExcel from '../helper/helpers';
 import { useEffect, useState } from 'react';
 
@@ -23,14 +24,11 @@ function CompetitiveReactionTest() {
       setData(prev => [...prev, { [playerName]: reactionTime }]);
     };
 
-    useEffect(() => {
-      console.log(data)
-    }, [data]);
-
   return (
     <div>
-        <h1>1vs1 Reaktionstest</h1>
+        <h1>1 vs. 1 - Reaktionstest</h1>
 
+        <Leaderboard leaderboardData={data}/>
         <ReactionTest targetRuns={targetRuns} playerNumber={2} addData={addData} />
 
         <div className='reaction-test-buttons'>
