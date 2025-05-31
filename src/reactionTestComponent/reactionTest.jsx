@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 function ReactionTest({ targetRuns, playerNumber, addData, playerName1, playerName2 }) {
     const currentRunNumber = useRef(0);
     const reactionSpeedTracker = useRef([]);
-    const reactionsCount = useRef(0);
+    const reactionsCount = useRef([]);
 
     const [testActive, setTestActive] = useState(false);
     const [reactionTimePhase, setReactionTimePhase] = useState(0);
@@ -67,17 +67,17 @@ function ReactionTest({ targetRuns, playerNumber, addData, playerName1, playerNa
                 }
             }
             else if (playerNumber === 2){
-                if (event.key === 'ü'){
+                if (event.key === 'ü' && !reactionsCount.current.includes('ü')) {
                     reactionTimePlayerÜ = Date.now() - colorChangeTimestamp;
                     addReactionTime(playerName1, reactionTimePlayerÜ);
-                    reactionsCount.current += 1;
+                    reactionsCount.current.push('ü');
 
-                } if (event.key === 'q'){
+                } if (event.key === 'q' && !reactionsCount.current.includes('q')){
                     reactionTimePlayerQ = Date.now() - colorChangeTimestamp;
                     addReactionTime(playerName2, reactionTimePlayerQ);
-                    reactionsCount.current += 1;
+                    reactionsCount.current.push('q');
                 }
-                if (reactionsCount.current >= 2){
+                if (reactionsCount.current.length >= 2){
                     setInstructionText(`Die Reaktionzeit des Q-Spielers war ${reactionTimePlayerQ} ms.
                         <br> Die Reaktionszeit des Ü-Spielers war ${reactionTimePlayerÜ} ms.
                         <br> Der Test wird in Kürze von selbst neu starten`);
@@ -89,7 +89,7 @@ function ReactionTest({ targetRuns, playerNumber, addData, playerName1, playerNa
                     } else {
                         setInstructionText(`Der Test ist abgeschlossen`);
                     }
-                    reactionsCount.current = 0;
+                    reactionsCount.current = [];
                     document.removeEventListener('keydown', handleKeystroke);
                 }
             }   
