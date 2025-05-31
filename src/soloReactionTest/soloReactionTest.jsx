@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import ReactionTest from '../reactionTestComponent/reactionTest';
-import exportToExcel from '../helper/helpers';
+import { exportToExcelSingleplayer } from '../helper/helpers';
 
 function SoloReactionTest(){
     const navigate = useNavigate();
@@ -31,7 +31,7 @@ function SoloReactionTest(){
 
             <div className='reaction-test-buttons'>
                 <button style={buttonStyle} onClick={() => navigate('/')}>Zurück zur Startseite</button>
-            <button style={buttonStyle} onClick={() => exportToExcel(data)}>Daten herunterladen</button>
+            <button style={buttonStyle} onClick={() => exportToExcelSingleplayer(data)}>Daten herunterladen</button>
             </div>
 
         </div>

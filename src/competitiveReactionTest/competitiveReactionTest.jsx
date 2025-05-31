@@ -1,7 +1,7 @@
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import ReactionTest from '../reactionTestComponent/reactionTest';
 import Leaderboard from './leaderboard';
-import exportToExcel from '../helper/helpers';
+import { exportToExcelMultiplayer } from '../helper/helpers';
 import { useState } from 'react';
 
 function CompetitiveReactionTest() {
@@ -38,7 +38,7 @@ function CompetitiveReactionTest() {
 
         <div className='reaction-test-buttons'>
             <button style={buttonStyle} onClick={() => navigate('/')}>Zurück zur Startseite</button>
-            <button style={buttonStyle} onClick={() => exportToExcel(data)}>Daten herunterladen</button>
+            <button style={buttonStyle} onClick={() => exportToExcelMultiplayer(data)}>Daten herunterladen</button>
         </div>
     </div>
   );
