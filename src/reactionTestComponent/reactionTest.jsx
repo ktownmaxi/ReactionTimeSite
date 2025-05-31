@@ -46,7 +46,7 @@ function ReactionTest({ targetRuns, playerNumber, addData, playerName1, playerNa
     function initiateReactionTest() {
         const colorChangeTimestamp = Date.now()
         let reactionTimePlayerQ = 0;
-        let reactionTimePlayerSpace = 0;
+        let reactionTimePlayerÜ = 0;
         setReactionTimePhase(2);
 
         function handleKeystroke(event){
@@ -68,8 +68,8 @@ function ReactionTest({ targetRuns, playerNumber, addData, playerName1, playerNa
             }
             else if (playerNumber === 2){
                 if (event.key === 'ü'){
-                    reactionTimePlayerSpace = Date.now() - colorChangeTimestamp;
-                    addReactionTime(playerName1, reactionTimePlayerSpace);
+                    reactionTimePlayerÜ = Date.now() - colorChangeTimestamp;
+                    addReactionTime(playerName1, reactionTimePlayerÜ);
                     reactionsCount.current += 1;
 
                 } if (event.key === 'q'){
@@ -79,7 +79,7 @@ function ReactionTest({ targetRuns, playerNumber, addData, playerName1, playerNa
                 }
                 if (reactionsCount.current >= 2){
                     setInstructionText(`Die Reaktionzeit des Q-Spielers war ${reactionTimePlayerQ} ms.
-                        <br> Die Reaktionszeit des Space-Spielers war ${reactionTimePlayerSpace} ms.
+                        <br> Die Reaktionszeit des Ü-Spielers war ${reactionTimePlayerÜ} ms.
                         <br> Der Test wird in Kürze von selbst neu starten`);
                     setReactionTimePhase(0);
                     setTestActive(false);
