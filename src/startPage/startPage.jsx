@@ -8,8 +8,8 @@ function StartPage() {
   const [selectedMode, setSelectedMode] = useState(null);
   const [numberOfRuns, setNumberOfRuns] = useState(3);
 
-  const [playerName1, setPlayerName1] = useState('');
-  const [playerName2, setPlayerName2] = useState('');
+  const [qPlayerName, setPlayerName1] = useState('');
+  const [üPlayerName, setPlayerName2] = useState('');
 
   const options = ["Solo Reaktionstest", "1v1 Reaktionstest"];
 
@@ -22,12 +22,12 @@ function StartPage() {
     if (selectedMode === 0) {
       navigate(`/soloReactionTest/${numberOfRuns}`);
     } else if (selectedMode === 1) {
-      if (!playerName1.trim() || !playerName2.trim()) {
+      if (!qPlayerName.trim() || !üPlayerName.trim()) {
         alert("Bitte gib die Namen beider Spieler ein.");
         return;
       }
       navigate(
-        `/competitiveReactionTest/${numberOfRuns}?player1=${encodeURIComponent(playerName1)}&player2=${encodeURIComponent(playerName2)}`
+        `/competitiveReactionTest/${numberOfRuns}?qPlayerName=${encodeURIComponent(qPlayerName)}&üPlayerName=${encodeURIComponent(üPlayerName)}`
       );
     }
   };
@@ -83,8 +83,8 @@ function StartPage() {
           ))}
         </div>
         <div className="name-creator" style={{ display: selectedMode!==1 ? 'none' : 'block' }} >
-          <input type="text" style={inputFieldStyle} value={playerName1}  onChange={(e) => setPlayerName1(e.target.value)} placeholder="Name des Ersten Spielers"/>
-          <input type="text" style={inputFieldStyle} value={playerName2} onChange={(e) => setPlayerName2(e.target.value)} placeholder="Name des Zweiten Spielers"/>
+          <input type="text" style={inputFieldStyle} value={qPlayerName}  onChange={(e) => setPlayerName1(e.target.value)} placeholder="Name des Q-Spielers"/>
+          <input type="text" style={inputFieldStyle} value={üPlayerName} onChange={(e) => setPlayerName2(e.target.value)} placeholder="Name des Ü-Spielers"/>
         </div>
       </div>
 

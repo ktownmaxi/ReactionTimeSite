@@ -11,8 +11,8 @@ function CompetitiveReactionTest() {
     const location = useLocation();
 
     const queryParams = new URLSearchParams(location.search);
-    const playerName1 = queryParams.get('player1');
-    const playerName2 = queryParams.get('player2');
+    const qPlayerName = queryParams.get('qPlayerName');
+    const üPlayerName = queryParams.get('üPlayerName');
 
     const buttonStyle = {
         width: '200px',
@@ -34,7 +34,7 @@ function CompetitiveReactionTest() {
         <h1>1 vs. 1 - Reaktionstest</h1>
 
         <Leaderboard leaderboardData={data} />
-        <ReactionTest targetRuns={targetRuns} playerNumber={2} addData={addData} playerName1={playerName1} playerName2={playerName2}/>
+        <ReactionTest targetRuns={targetRuns} playerNumber={2} addData={addData} qPlayerName={qPlayerName} üPlayerName={üPlayerName}/>
 
         <div className='reaction-test-buttons'>
             <button style={buttonStyle} onClick={() => navigate('/')}>Zurück zur Startseite</button>
