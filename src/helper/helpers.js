@@ -1,7 +1,7 @@
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 
-export const exportToExcelMultiplayer = (exportArray) => {
+export const exportToExcelMultiplayer = (exportArray, filename) => {
   const wb = XLSX.utils.book_new();
 
   const dataForSheet = [];
@@ -26,10 +26,10 @@ for (let i = 0; i < exportArray.length; i += 2) {
   const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
 
   const blob = new Blob([wbout], { type: 'application/octet-stream' });
-  saveAs(blob, 'reactionSpeedData.xlsx');
+  saveAs(blob, filename);
 };
 
-export const exportToExcelSingleplayer = (exportArray) => {
+export const exportToExcelSingleplayer = (exportArray, filename) => {
   const wb = XLSX.utils.book_new();
 
   const dataForSheet = exportArray.map((entry, index) => {
@@ -46,5 +46,5 @@ export const exportToExcelSingleplayer = (exportArray) => {
   const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
 
   const blob = new Blob([wbout], { type: 'application/octet-stream' });
-  saveAs(blob, 'reactionSpeedData.xlsx');
+  saveAs(blob, filename);
 };

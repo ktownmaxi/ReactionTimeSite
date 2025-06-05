@@ -2,9 +2,11 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import ReactionTest from '../reactionTestComponent/reactionTest';
 import { exportToExcelSingleplayer } from '../helper/helpers';
+import { useUuid } from '../helper/uuidContext';
 
 function SoloReactionTest(){
     const navigate = useNavigate();
+    const uuid = useUuid()
 
     let targetRuns = useParams().numberOfRuns;
 
@@ -31,7 +33,7 @@ function SoloReactionTest(){
 
             <div className='reaction-test-buttons'>
                 <button style={buttonStyle} onClick={() => navigate('/')}>Zurück zur Startseite</button>
-            <button style={buttonStyle} onClick={() => exportToExcelSingleplayer(data)}>Daten herunterladen</button>
+            <button style={buttonStyle} onClick={() => exportToExcelSingleplayer(data, uuid + ".xlsx")}>Daten herunterladen</button>
             </div>
 
         </div>

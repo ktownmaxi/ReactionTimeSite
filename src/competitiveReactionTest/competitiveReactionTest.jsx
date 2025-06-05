@@ -3,9 +3,11 @@ import ReactionTest from '../reactionTestComponent/reactionTest';
 import Leaderboard from './leaderboard';
 import { exportToExcelMultiplayer } from '../helper/helpers';
 import { useState } from 'react';
+import { useUuid } from '../helper/uuidContext';
 
 function CompetitiveReactionTest() {
     const navigate = useNavigate();
+    const uuid = useUuid();
 
     let targetRuns = useParams().numberOfRuns;
     const location = useLocation();
@@ -38,7 +40,7 @@ function CompetitiveReactionTest() {
 
         <div className='reaction-test-buttons'>
             <button style={buttonStyle} onClick={() => navigate('/')}>Zurück zur Startseite</button>
-            <button style={buttonStyle} onClick={() => exportToExcelMultiplayer(data)}>Daten herunterladen</button>
+            <button style={buttonStyle} onClick={() => exportToExcelMultiplayer(data,  uuid + ".xlsx")}>Daten herunterladen</button>
         </div>
     </div>
   );
