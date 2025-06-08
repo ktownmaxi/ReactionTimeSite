@@ -4,6 +4,7 @@ import StartPage from './startPage/startPage';
 import SoloReactionTest from './soloReactionTest/soloReactionTest';
 import CompetitiveReactionTest from './competitiveReactionTest/competitiveReactionTest';
 import AutomaticReactionTest from './automaticReactionTest/automaticReactionTest';
+import DataManager from './dataManager/dataManager';
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
           <Route path="/soloReactionTest/:numberOfRuns" element={<SoloReactionTest/>}/>
           <Route path="/competitiveReactionTest/:numberOfRuns" element={<CompetitiveReactionTest/>}/>
           <Route path="/automaticReactionTest/" element={<AutomaticReactionTest/>}/>
+          <Route path="/dataManager" element={<DataManager/>}/>
         </Routes>
 
         <footer id="footer">

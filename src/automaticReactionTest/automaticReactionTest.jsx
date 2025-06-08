@@ -1,9 +1,12 @@
-import { useState} from "react";
+import { useEffect, useState} from "react";
+import axios from "axios";
 import { exportToExcelMultiplayer, exportToExcelSingleplayer } from "../helper/helpers";
 import { useUuid } from '../helper/uuidContext';
 import StartScreen from "./automaticTestStart";
 import ReactionTest from "../reactionTestComponent/reactionTest";
 import FinishScreen from "./finishScreen";
+
+
 function AutomaticReactionTest() {
 
     const targetRuns = 2;
@@ -11,7 +14,31 @@ function AutomaticReactionTest() {
 
     const [screen, setScreen] = useState("start");
     const [group, setGroup] = useState("A");
+    const [file, setFile] = useState(null);
     const [data, setData] = useState([]);
+
+    async function uploadFile() {
+        if (!file) return;
+        try {
+            await axios.post(
+            'https://dev.adc-mbdevelopment.me/upload',
+            file,
+            {
+                headers: {
+                'Content-Type': 'multipart/form-data'
+                }
+            }
+            );
+            console.log("Datei erfolgreich hochgeladen");
+        } catch (error) {
+            console.error("Error uploading file:", error);
+        }
+    }
+
+
+    useEffect(() => {
+        uploadFile();
+    }, [file]);
 
     const addData = (playerName, reactionTime) => {
       setData(prev => [...prev, { [playerName]: reactionTime }]);
@@ -28,7 +55,7 @@ function AutomaticReactionTest() {
 
     const soloTestCallback = () => {
         setData(prevData => {
-            exportToExcelSingleplayer(prevData, uuid + "Gruppe" + group + ".xlsx");
+            setFile(exportToExcelSingleplayer(prevData, uuid + "Gruppe" + group + "Singleplayer1" + ".xlsx"));
             return prevData;
         });
         startSecondTest();
@@ -38,9 +65,9 @@ function AutomaticReactionTest() {
         setData(prevData => {
         console.log("Data for export:", prevData);
         if (group === "A") {
-            exportToExcelMultiplayer(prevData, uuid + "Gruppe" + group + ".xlsx");
+            setFile(exportToExcelMultiplayer(prevData, uuid + "Gruppe" + group + "Multiplayer1" + ".xlsx"));
         } else if (group === "B") {
-            exportToExcelSingleplayer(prevData, uuid + "Gruppe" + group + ".xlsx");
+            setFile(exportToExcelSingleplayer(prevData, uuid + "Gruppe" + group + "Singleplayer2" + ".xlsx"));
         }
         return prevData;
         });

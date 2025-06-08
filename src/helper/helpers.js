@@ -26,7 +26,12 @@ for (let i = 0; i < exportArray.length; i += 2) {
   const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
 
   const blob = new Blob([wbout], { type: 'application/octet-stream' });
+
+  const formData = new FormData();
+  formData.append('file', blob, filename);
+
   saveAs(blob, filename);
+  return formData;
 };
 
 export const exportToExcelSingleplayer = (exportArray, filename) => {
@@ -46,5 +51,10 @@ export const exportToExcelSingleplayer = (exportArray, filename) => {
   const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
 
   const blob = new Blob([wbout], { type: 'application/octet-stream' });
+
+  const formData = new FormData();
+  formData.append('file', blob, filename);
+
   saveAs(blob, filename);
+  return formData;
 };
