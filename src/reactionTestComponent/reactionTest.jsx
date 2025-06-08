@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
-function ReactionTest({ targetRuns, playerNumber, addData, qPlayerName, üPlayerName }) {
+function ReactionTest({ targetRuns, playerNumber, addData, qPlayerName, üPlayerName, callback }) {
     const currentRunNumber = useRef(0);
     const reactionSpeedTracker = useRef([]);
     const reactionsCount = useRef([]);
@@ -47,6 +47,7 @@ function ReactionTest({ targetRuns, playerNumber, addData, qPlayerName, üPlayer
         const colorChangeTimestamp = Date.now()
         let reactionTimePlayerQ = 0;
         let reactionTimePlayerÜ = 0;
+        reactionsCount.current = [];
         setReactionTimePhase(2);
 
         function handleKeystroke(event){
@@ -62,6 +63,7 @@ function ReactionTest({ targetRuns, playerNumber, addData, qPlayerName, üPlayer
                         setTimeout(startTest, 2000);
                     } else {
                         setInstructionText(`Der Test ist abgeschlossen`);
+                        setTimeout(callback, 1000)
                     }
                     document.removeEventListener('keydown', handleKeystroke);
                 }
@@ -88,6 +90,7 @@ function ReactionTest({ targetRuns, playerNumber, addData, qPlayerName, üPlayer
                         setTimeout(startTest, 2000);
                     } else {
                         setInstructionText(`Der Test ist abgeschlossen`);
+                        setTimeout(callback, 1000)
                     }
                     reactionsCount.current = [];
                     document.removeEventListener('keydown', handleKeystroke);

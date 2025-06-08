@@ -3,6 +3,7 @@ import './App.css'
 import StartPage from './startPage/startPage';
 import SoloReactionTest from './soloReactionTest/soloReactionTest';
 import CompetitiveReactionTest from './competitiveReactionTest/competitiveReactionTest';
+import AutomaticReactionTest from './automaticReactionTest/automaticReactionTest';
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
           <Route path="/" element={<StartPage/>}/>
           <Route path="/soloReactionTest/:numberOfRuns" element={<SoloReactionTest/>}/>
           <Route path="/competitiveReactionTest/:numberOfRuns" element={<CompetitiveReactionTest/>}/>
+          <Route path="/automaticReactionTest/" element={<AutomaticReactionTest/>}/>
         </Routes>
 
         <footer id="footer">

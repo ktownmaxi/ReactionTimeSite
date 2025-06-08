@@ -40,7 +40,8 @@ function CompetitiveReactionTest() {
 
         <div className='reaction-test-buttons'>
             <button style={buttonStyle} onClick={() => navigate('/')}>Zurück zur Startseite</button>
-            <button style={buttonStyle} onClick={() => exportToExcelMultiplayer(data,  uuid + ".xlsx")}>Daten herunterladen</button>
+            <button style={buttonStyle} onClick={() => {console.log(data) 
+              exportToExcelMultiplayer(data,  uuid + ".xlsx")}}>Daten herunterladen</button>
         </div>
     </div>
   );
