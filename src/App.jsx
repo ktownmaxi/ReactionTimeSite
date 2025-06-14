@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import './App.css'
 import StartPage from './startPage/startPage';
 import SoloReactionTest from './soloReactionTest/soloReactionTest';
@@ -7,6 +8,22 @@ import AutomaticReactionTest from './automaticReactionTest/automaticReactionTest
 import DataManager from './dataManager/dataManager';
 
 function App() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.ctrlKey && event.key === 'ä') {
+        event.preventDefault();
+        navigate('/dataManager');
+      }1
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   return (
       <div>

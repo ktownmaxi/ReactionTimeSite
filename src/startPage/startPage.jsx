@@ -40,6 +40,11 @@ function StartPage() {
     userSelect: 'none',
   };
 
+  const automaticNavigationButtonStyle = {
+    ...baseButtonStyle,
+    width: '250px',
+  }
+
   const inactiveButtonStyle = {
     ...baseButtonStyle,
   };
@@ -70,6 +75,9 @@ function StartPage() {
       <h1>Reaktionstests - Start Menü</h1>
 
       <div className="mode-selection">
+        <div id="automaticReactionTestButton">
+          <button style={automaticNavigationButtonStyle} onClick={() => navigate('/automaticReactionTest/')}>Automatischer Reaktionstest</button>
+        </div>
         <h2>Wähle einen Modus:</h2>
         <div className="mode-selection-buttons">
           {options.map((option, index) => (
