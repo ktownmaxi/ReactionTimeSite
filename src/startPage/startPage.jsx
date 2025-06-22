@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 function StartPage() {
   const navigate = useNavigate();
 
-  const [selectedMode, setSelectedMode] = useState(null);
-  const [numberOfRuns, setNumberOfRuns] = useState(3);
+  const [selectedMode, setSelectedMode] = useState(0);
+  const [numberOfRuns, setNumberOfRuns] = useState(15);
 
   const [qPlayerName, setPlayerName1] = useState('');
   const [üPlayerName, setPlayerName2] = useState('');

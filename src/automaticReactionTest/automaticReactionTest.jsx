@@ -17,6 +17,9 @@ function AutomaticReactionTest() {
     const [file, setFile] = useState(null);
     const [data, setData] = useState([]);
 
+    const [qPlayerName, setPlayerNameQ] = useState('');
+    const [üPlayerName, setPlayerNameÜ] = useState('');
+
     async function uploadFile() {
         if (!file) return;
         try {
@@ -46,16 +49,12 @@ function AutomaticReactionTest() {
 
     function startSecondTest() {
         setData([]);
-        if (group === "A") {
-            setScreen("competitive");
-        } else if (group === "B") {
-            setScreen("solo2")
-        }
+        setScreen("solo2");
     }
 
     const soloTestCallback = () => {
         setData(prevData => {
-            setFile(exportToExcelSingleplayer(prevData, uuid + "Gruppe" + group + "Singleplayer1" + ".xlsx"));
+            setFile(exportToExcelSingleplayer(prevData, "Gruppe" + group + "Solo" + qPlayerName + ".xlsx"));
             return prevData;
         });
         startSecondTest();
@@ -63,22 +62,30 @@ function AutomaticReactionTest() {
 
     const secondTestCallback = () => {
         setData(prevData => {
-        console.log("Data for export:", prevData);
-        if (group === "A") {
-            setFile(exportToExcelMultiplayer(prevData, uuid + "Gruppe" + group + "Multiplayer1" + ".xlsx"));
-        } else if (group === "B") {
-            setFile(exportToExcelSingleplayer(prevData, uuid + "Gruppe" + group + "Singleplayer2" + ".xlsx"));
-        }
-        return prevData;
+            if (group === "A") {
+                setFile(exportToExcelMultiplayer(prevData, "Gruppe" + group + "Solo" + üPlayerName + ".xlsx"));
+                setScreen("competitive");
+            } else if (group === "B") {
+                setFile(exportToExcelSingleplayer(prevData, "Gruppe" + group + "Solo2" + qPlayerName + ".xlsx"));
+                setScreen("finish");
+            }
+            return prevData;
         });
-        setScreen("finish");
+    }
+
+    const competitiveTestCallback = () => {
+        setData(prevData => {
+            setFile(exportToExcelMultiplayer(prevData,  "Gruppe" + group + "Multiplayer" + qPlayerName + üPlayerName + ".xlsx"));
+            setScreen("finish");
+            return prevData;
+        });
     }
 
     const screens = {
-        start: <StartScreen setScreen={setScreen} setGroup={setGroup} onNext={setScreen} />,
+        start: <StartScreen setScreen={setScreen} setGroup={setGroup} setPlayerQ={setPlayerNameQ} setPlayerÜ={setPlayerNameÜ} onNext={setScreen} />,
         solo : <ReactionTest key="solo" targetRuns={targetRuns} playerNumber={1} addData={addData} callback={soloTestCallback}/>,
         solo2 : <ReactionTest key="solo2" targetRuns={targetRuns} playerNumber={1} addData={addData} callback={secondTestCallback}/>,
-        competitive : <ReactionTest key="competitive" targetRuns={targetRuns} playerNumber={2} addData={addData} qPlayerName={"Spieler Q"} üPlayerName={"Spieler Ü"} callback={secondTestCallback}/>,
+        competitive : <ReactionTest key="competitive" targetRuns={targetRuns} playerNumber={2} addData={addData} qPlayerName={"Spieler Q"} üPlayerName={"Spieler Ü"} callback={competitiveTestCallback}/>,
         finish : <FinishScreen/>
     };
 
