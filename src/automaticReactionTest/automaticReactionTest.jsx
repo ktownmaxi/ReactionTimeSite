@@ -87,9 +87,15 @@ function AutomaticReactionTest() {
 
     const screens = {
         start: <StartScreen setScreen={setScreen} setGroup={setGroup} setPlayerQ={setPlayerNameQ} setPlayerÜ={setPlayerNameÜ} onNext={setScreen} />,
-        solo : <ReactionTest key="solo" targetRuns={targetRuns} playerNumber={1} addData={addDataSingleplayer} callback={soloTestCallback}/>,
-        solo2 : <ReactionTest key="solo2" targetRuns={targetRuns} playerNumber={1} addData={addDataSingleplayer} callback={secondTestCallback}/>,
-        competitive : <CompetitiveScreen key="competitive" targetRuns={targetRuns} playerNumber={2} addData={addDataCompetitive} qPlayerName={"Spieler Q"} üPlayerName={"Spieler Ü"} callback={competitiveTestCallback} data={dataCompetitive}/>,
+        solo : <div>
+                    <h1>Solo Test von {qPlayerName}</h1>    
+                    <ReactionTest key="solo" targetRuns={targetRuns} playerNumber={1} addData={addDataSingleplayer} callback={soloTestCallback}/>
+        </div>,
+        solo2: <div>
+                    <h1>Solo Test von {üPlayerName}</h1>    
+                    <ReactionTest key="solo2" targetRuns={targetRuns} playerNumber={1} addData={addDataSingleplayer} callback={secondTestCallback}/>
+        </div>,
+        competitive : <CompetitiveScreen key="competitive" targetRuns={targetRuns} playerNumber={2} addData={addDataCompetitive} qPlayerName={qPlayerName} üPlayerName={üPlayerName} callback={competitiveTestCallback} data={dataCompetitive}/>,
         finish : <FinishScreen/>
     };
 
