@@ -1,16 +1,15 @@
 import { useEffect, useState} from "react";
 import axios from "axios";
 import { exportToExcelMultiplayer, exportToExcelSingleplayer } from "../helper/helpers";
-import { useUuid } from '../helper/uuidContext';
 import StartScreen from "./automaticTestStart";
 import ReactionTest from "../reactionTestComponent/reactionTest";
 import FinishScreen from "./finishScreen";
+import CompetitiveScreen from "./automaticCompetitive";
 
 
 function AutomaticReactionTest() {
 
-    const targetRuns = 2;
-    const uuid = useUuid();
+    const targetRuns = 15;
 
     const [screen, setScreen] = useState("start");
     const [group, setGroup] = useState("A");
@@ -33,7 +32,6 @@ function AutomaticReactionTest() {
                 }
             }
             );
-            console.log("Datei erfolgreich hochgeladen");
         } catch (error) {
             console.error("Error uploading file:", error);
         }
@@ -91,7 +89,7 @@ function AutomaticReactionTest() {
         start: <StartScreen setScreen={setScreen} setGroup={setGroup} setPlayerQ={setPlayerNameQ} setPlayerÜ={setPlayerNameÜ} onNext={setScreen} />,
         solo : <ReactionTest key="solo" targetRuns={targetRuns} playerNumber={1} addData={addDataSingleplayer} callback={soloTestCallback}/>,
         solo2 : <ReactionTest key="solo2" targetRuns={targetRuns} playerNumber={1} addData={addDataSingleplayer} callback={secondTestCallback}/>,
-        competitive : <ReactionTest key="competitive" targetRuns={targetRuns} playerNumber={2} addData={addDataCompetitive} qPlayerName={"Spieler Q"} üPlayerName={"Spieler Ü"} callback={competitiveTestCallback}/>,
+        competitive : <CompetitiveScreen key="competitive" targetRuns={targetRuns} playerNumber={2} addData={addDataCompetitive} qPlayerName={"Spieler Q"} üPlayerName={"Spieler Ü"} callback={competitiveTestCallback} data={dataCompetitive}/>,
         finish : <FinishScreen/>
     };
 
