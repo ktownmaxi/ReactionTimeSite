@@ -9,7 +9,7 @@ import FinishScreen from "./finishScreen";
 
 function AutomaticReactionTest() {
 
-    const targetRuns = 2;
+    const targetRuns = 15;
     const uuid = useUuid();
 
     const [screen, setScreen] = useState("start");
