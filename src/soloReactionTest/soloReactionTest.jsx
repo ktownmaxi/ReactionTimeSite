@@ -33,7 +33,7 @@ function SoloReactionTest(){
 
             <div className='reaction-test-buttons'>
                 <button style={buttonStyle} onClick={() => navigate('/')}>Zurück zur Startseite</button>
-            <button style={buttonStyle} onClick={() => exportToExcelSingleplayer(data, uuid + ".xlsx")}>Daten herunterladen</button>
+            <button style={buttonStyle} onClick={() => console.log(data)}>Daten herunterladen</button>
             </div>
 
         </div>
